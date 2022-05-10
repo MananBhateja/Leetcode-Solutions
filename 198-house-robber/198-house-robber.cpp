@@ -1,12 +1,31 @@
 class Solution {
 public:
-    // tipa hua .....
+    int f(int n,vector<int>nums,vector<int>&dp){
+        
+        if(n == 0) return dp[n]=nums[0];
+        
+        if(n < 0) return 0;
+        
+        
+        if(dp[n]!=-1) return dp[n];
+        
+        int pick=nums[n]+f(n-2,nums,dp);
+        
+        int notpick=0+f(n-1,nums,dp);
+        
+        return dp[n]=max(pick,notpick);
+        
+        
+    }
+    
+    
+    
     int rob(vector<int>& nums) {
-        if (size(nums) <= 1) return size(nums) == 1 ? nums[0] : 0;
-        nums[1] = max(nums[0], nums[1]);
-        for (int i = 2; i < size(nums); ++i) {
-            nums[i] = max(nums[i - 1], nums[i - 2] + nums[i]);
-        }
-        return nums.back();
+        
+        int n=nums.size();
+        vector<int>dp(n,-1);
+        
+        return f(n-1,nums,dp);
+        
     }
 };
