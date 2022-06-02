@@ -1,20 +1,27 @@
 class Solution {
 public:
-    // tipa hua.....
-    int v[201][201];
-    int minPath(vector<vector<int>>& triangle, int size, int currIndex, int currRow) {
-        if(size==0)
-            return 0;
-        if(v[currRow][currIndex]!=-1)
-            return v[currRow][currIndex];
-        int itaken = triangle[currRow][currIndex] + minPath(triangle, size-1, currIndex, currRow+1);
-        int inottaken = triangle[currRow][currIndex] + minPath(triangle, size-1, currIndex+1, currRow+1);
-        v[currRow][currIndex] = min(itaken, inottaken);
-        return min(itaken, inottaken);
+    int func(int i, int j,vector<vector<int>>& triangle,vector<vector<int>>& dp){
+    
+        
+        if(i == triangle.size())  return 0;//return dp[triangle.size()-1][j]=triangle[triangle.size()-1][j];
+        
+        if(dp[i][j] != -1) return dp[i][j];
+        
+//         int d=triangle[i][j]+func(i,j+1,triangle,dp);
+        
+//         int dg=triangle[i][j]+func(i+1,j+1,triangle,dp);
+        
+        return dp[i][j]=triangle[i][j]+min(func(i+1,j,triangle,dp),func(i+1,j+1,triangle,dp));
+        
     }
+    
+    
     int minimumTotal(vector<vector<int>>& triangle) {
-        memset(v,-1,sizeof(v));
-        int n = triangle.size();
-        return minPath(triangle,n,0,0);
+     
+       int n=triangle.size();
+    vector<vector<int>> dp(n,vector<int> (n,-1));
+        return func(0,0,triangle,dp);
+        
+        
     }
 };
