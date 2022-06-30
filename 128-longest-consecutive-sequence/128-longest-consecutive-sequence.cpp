@@ -2,39 +2,37 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& arr) {
         
-        if(arr.size() == 0) return 0;
+    unordered_map<int,int>s;
         
+        for(auto x: arr)
+            s[x]++;
         
-        sort(arr.begin(),arr.end());
-    
-    int i=0,j=i+1;
-    
-    int mx=INT_MIN,cnt=0;
-    while(j < arr.size()){
-       if(arr[j] ==  arr[i] )
-       {
-           i++;
-           j++;
-           continue;
-       }
+        int i=0;
         
-    if(arr[j] - arr[i]  == 1){
-        cnt++;
-        mx=max(mx,cnt);
-       
-    }
-    else{
-        cnt=0;
+        int mx=INT_MIN,cnt=0;
+        while(i < arr.size()){
+            
+            if(! s.count(arr[i]-1) and s[arr[i]] > 0 ){
+                s[arr[i]]=0;
+               int x=arr[i]+1;
+                while(s.count(x)){
+                    cout<<x<<endl;
+                    cout<<"cnt"<<cnt<<endl;  
+                    cnt++;
+                    x++;
+                }
+               mx=max(mx,cnt);
+                cnt=0;
+             }
+           
+            
+            i++;
+            
+            
+        }
         
-    }
-        
-        
-        i++;
-        j++;
-    }
-    
-    if(mx != INT_MIN)  return mx+1;
-    else return cnt+1;
+        if(mx != INT_MIN) return mx+1;
+        else return cnt=0;
         
     }
 };
