@@ -2,23 +2,35 @@ class Solution {
 public:
     vector<int> rearrangeArray(vector<int>& nums) {
         
-        vector<int>pos;
-        vector<int>neg;
+    int pos=0,neg=0;
         
         vector<int>ans;
-        int n = nums.size()/2;
+        while(nums[pos] < 0)
+            pos++;
         
-        for(auto x: nums){
-         if(x > 0)   pos.push_back(x);
-         
-         else  neg.push_back(x);
-        }
+        while(nums[neg] > 0)
+            neg++;
         
-        for(int i=0;i<n;i++){
+        while(pos < nums.size() or neg < nums.size()){
             
-            ans.push_back(pos[i]);
-            ans.push_back(neg[i]);
+            ans.push_back(nums[pos]);
+            ans.push_back(nums[neg]);
+                pos++;
+                neg++;
+            while(pos < nums.size() and nums[pos] < 0)
+            pos++;
+        
+        while(neg < nums.size() and nums[neg] > 0)
+            neg++;
+            
+            
         }
+        
+//         cout<<nums[pos]<<endl;
+        
+//         cout<<nums[neg]<<endl;
+        
         return ans;
+        
     }
 };
