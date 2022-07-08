@@ -1,40 +1,40 @@
 class Solution {
-public:        // vector<vector<int>>&dp
-    bool func(int ind, int target, vector<int>&nums,vector<vector<int>>&dp){
-        
-        if(ind == 0) return nums[0] == target;
-        
-        if(target == 0) return true;
-       
-        if(dp[ind][target]!=-1) 
-            return dp[ind][target];
-        
-        bool take =false;
-        
-        if(target >= nums[ind]) 
-            take=func(ind-1,target-nums[ind],nums,dp);
-        
-        bool nottake=func(ind-1,target,nums,dp);
-        
-        
-        return dp[ind][target]=take or nottake;
-        
-    }
+public:
+   bool func(int n,int tar,vector<int>&arr,vector<vector<int>>&dp){
     
+    if(tar == 0) return true;
+    
+    if(n == 0) return arr[0] == tar;
+    
+    if(dp[n][tar] != -1 ) return dp[n][tar];
+    
+    bool notpick =func(n-1,tar,arr,dp);
+    bool pick =false;
+    
+    if(tar >= arr[n])
+        pick=func(n-1,tar-arr[n],arr,dp);
+    
+    return dp[n][tar]=notpick or pick;
+    
+}
+
     
     
     bool canPartition(vector<int>& nums) {
         
-        int totsum=0;
-        for(auto x:nums)
-            totsum+=x;
-        
-        if(totsum % 2) return false;
-        int target=totsum/2;
+        int sum=0;
         int n=nums.size();
-        vector<vector<int>>dp(n,vector<int>(target+1,-1));
+        //vector<vector<int>>dp(n,vector<int>( (sum/2)+1,-1 ));
         
-    
-        return func(n-1,target,nums,dp);
+        for(auto x:nums)
+            sum+=x;
+       int target=sum/2;
+        vector<vector<int>>dp(n,vector<int>(target+1,-1 ));
+        
+        if(sum %2 == 1)
+            return false;
+        else
+            return func(nums.size()-1,target,nums,dp);
+        
     }
 };
