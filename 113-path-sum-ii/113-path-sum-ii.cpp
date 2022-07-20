@@ -11,35 +11,51 @@
  */
 class Solution {
 public:
-    vector<vector<int>>ans;
- void ps(TreeNode* root, int targetSum,int cs,vector<int>v){
+    
+    void func(TreeNode *root, int target, vector<vector<int>>&ans,vector<int>v){
         
         if(root == NULL) return ;
-        cs+=root->val;
-        v.push_back(root->val);
-        if(!root->left and !root->right){
+        
+        if(root and !root->left and !root->right)
+        {
             
-            if(cs == targetSum)
+            if(target == root->val){
+           v.push_back(root->val);
                 ans.push_back(v);
+                cout<<"yrha"<<endl;
+               v.pop_back();
+                
+                
+            } 
+            
+            return ;
+            
         }
         
-        ps(root->left,targetSum,cs,v);
+        v.push_back(root->val);
         
-        ps(root->right,targetSum,cs,v);
+        func(root->left,target-root->val,ans,v);
+//         v.pop_back();
         
+//         v.push_back(root->val);
+        
+        func(root->right,target-root->val,ans,v);
         v.pop_back();
-        return ;
+        
+       // return ;
     }
     
     
+    
+    
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-     
-        vector<int>v;
+        
+        vector<vector<int>>ans;
         if(root == NULL) return ans;
-        int cs=0;
-        ps(root,targetSum,cs,v);
+        
+        vector<int>v;
+         func(root,targetSum,ans,v);
         
         return ans;
-        
     }
 };
