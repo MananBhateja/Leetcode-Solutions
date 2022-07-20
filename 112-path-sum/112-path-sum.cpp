@@ -11,29 +11,17 @@
  */
 class Solution {
 public:
-    bool func(TreeNode* root, int cs, int targetSum){
-        
+    bool hasPathSum(TreeNode* root, int target) {
         if(root == NULL) return false;
         
-        if( !root->left and !root->right){
-           
-            if(cs +root->val == targetSum)
-                return true;
-            else
-                return false;
+        if( root and (root->left == NULL and root->right == NULL) ){
             
+            if(target == root->val ) return true;
+            else return false;
         }
         
-        return func(root->left,cs+root->val,targetSum) or func(root->right,cs+root->val,targetSum) ;
         
-        
-    }
-    
-    
-    bool hasPathSum(TreeNode* root, int targetSum) {
-        
-        int cs=0;
-      return   func(root,cs,targetSum);
+        return hasPathSum(root->left,target-root->val) or hasPathSum(root->right,target-root->val);
         
         
     }
