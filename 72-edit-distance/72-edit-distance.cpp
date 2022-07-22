@@ -1,36 +1,54 @@
 class Solution {
 public:
-    int func(string word1, string word2,int n, int m,int dp[][1000]){
+    int minDistance(string s, string t) {
         
-        if(n == 0) return dp[n][m]=m;
+        if(s.size() == 0) return t.size();
         
-        if(m == 0) return dp[n][m]=n;
+        if(t.size() == 0) return s.size();
+        
+        int m=s.size();
+        int n=t.size();
+        
+        vector<vector<int>>dp(m+1,vector<int>(n+1,0));
         
         
-        if(dp[n][m] !=-1) return dp[n][m];
+        for(int i=0;i<=m;i++)
+            dp[i][0]=i;
         
-        if(word1[n-1] == word2[m-1])
-        return func(word1,word2,n-1,m-1,dp);
+        for(int j=0;j<=n;j++)
+            dp[0][j]=j;
         
-        else{
+        
+        for(int i=1;i<=m;i++){
             
-            int op1=func(word1,word2,n-1,m-1,dp);
-            int op2=func(word1,word2,n,m-1,dp);
-            int op3=func(word1,word2,n-1,m,dp);
-            
-            return dp[n][m]=min(op1,min(op2,op3))+1;
+            for(int j=1;j<=n;j++){
+                
+                if(s[i-1] == t[j-1]) 
+                    dp[i][j]= 0 +dp[i-1][j-1];
+                else
+                {
+                    int op1=1+dp[i][j-1]; // insert
+                    
+                    int op2=1+dp[i-1][j]; // delete
+                    
+                    int op3 =1+dp[i-1][j-1];
+                    
+                    dp[i][j] = min(op1,min(op2,op3));
+                }
+                
+            }
         }
         
+        for(int i=0;i<=m;i++){
+            
+            for(int j=0;j<=n;j++){
+                cout<<dp[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+        
+      return dp[m][n];  
     }
     
-    
-    
-    
-    int minDistance(string word1, string word2) {
-        int dp[1000][1000];
-        memset(dp,-1,sizeof(dp));
-        int n=word1.length();
-        int m=word2.length();
-      return   func(word1,word2,n,m,dp);
-    }
 };
