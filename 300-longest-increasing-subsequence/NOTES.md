@@ -16,3 +16,6 @@ int ans=1;
 for(int j=0;j<nums.size();j++){
 ans=max(ans,dp[j]);
 }
+return ans;
+}
+};
