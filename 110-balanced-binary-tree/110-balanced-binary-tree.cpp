@@ -12,33 +12,21 @@
 class Solution {
 public:
     
-    pair<int,bool> help(TreeNode* root)
-    {
-        pair<int,bool>p;
+    int func(TreeNode* root){
         
-        if(root == NULL){
-            p.first=0;
-            p.second=true;
-            
-            return p;
-        }
+        if(root == NULL) return 0;
         
-        pair<int,bool> left =help(root->left);
-        pair<int,bool> right =help(root->right);
+        int lh=func(root->left);
+        if(lh == -1) return -1;
+        int rh=func(root->right);
+        if(rh == -1) return -1;
+        if(abs(lh-rh) > 1 ) return -1;
         
-        p.first=max(left.first , right.first)+1;
-        
-        if( abs(left.first - right.first) <= 1 and left.second and right.second ){
-            p.second = true;
-        }
-        else
-            p.second= false;
-        
-        return p;
+        return max(lh,rh)+1;
     }
     
     bool isBalanced(TreeNode* root) {
-        if(root == NULL) return true;
-        return help(root).second;
+        
+        return func(root) != -1;
     }
 };
