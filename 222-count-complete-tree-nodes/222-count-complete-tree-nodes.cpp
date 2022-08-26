@@ -11,73 +11,41 @@
  */
 class Solution {
 public:
-    
-    int depth(TreeNode * root){
+    int lheight(TreeNode * root){
         
-        int count=0;
-        while(root->left){
+       int cnt=0;
+        
+        while(root){
+            cnt++;
             root=root->left;
-            
-            count++;
         }
-        return count;
-    }
-    
-    bool check(TreeNode * root,int indx, int d){
-        
-        
-        int l=1;
-        int r=pow(2,d);
-        int pivot=0;
-        
-        for(int i=0;i<d;i++){
-            
-            pivot=(l+r)/2;
-            if(indx <= pivot){
-                root=root->left;
-                r=pivot;
-                
-            }
-            else{
-                root=root->right;
-                l=pivot+1;
-            }
-        }
-        if(root == NULL) return false;
-        
-        return true;
-        
+        return cnt;
     }
     
     
-    
+    int rheight(TreeNode * root){
+        
+       int cnt=0;
+        
+        while(root){
+            cnt++;
+            root=root->right;
+        }
+        return cnt;
+    }
     
     int countNodes(TreeNode* root) {
         
-        if( root == NULL) return 0;
+    
+        int left=lheight(root);
         
-        int d=depth(root);
-        cout<<d<<endl;
+        int right=rheight(root);
         
-        if(d==0) return 1;
-        
-        int left=1,right=pow(2,d);
-        int n=0;
-        
-        while(left <=right){
-            
-            int pivot=(left+right)/2;
-            if(check(root,pivot,d)){
-                left=pivot+1;
-                n=pivot;
-            }
-            else{
-                right=pivot-1;
-            }
-            
-        }
-        
-        return pow(2,d)-1+n; // we have considered level1 as depth=0
+        if(left == right)
+            return pow(2,left)-1;
+        else
+            return 1 + countNodes(root->left) +countNodes(root->right);
         
     }
+    
 };
