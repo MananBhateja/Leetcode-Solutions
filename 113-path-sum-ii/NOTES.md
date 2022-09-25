@@ -21,15 +21,3 @@ if(cs == targetSum)
 ans.push_back(v);
 }
 ps(root->left,targetSum,cs,v);
-ps(root->right,targetSum,cs,v);
-v.pop_back();
-return ;
-}
-vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-vector<int>v;
-if(root == NULL) return ans;
-int cs=0;
-ps(root,targetSum,cs,v);
-return ans;
-}
-};
