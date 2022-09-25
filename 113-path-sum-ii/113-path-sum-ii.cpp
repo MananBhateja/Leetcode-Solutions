@@ -12,50 +12,42 @@
 class Solution {
 public:
     
-    void func(TreeNode *root, int target, vector<vector<int>>&ans,vector<int>v){
-        
+    void func(TreeNode * root, int target,vector<int>&v, vector<vector<int>>&ans){
         if(root == NULL) return ;
         
-        if(root and !root->left and !root->right)
-        {
+        if(root and root->left== NULL and root->right == NULL){
             
-            if(target == root->val){
-           v.push_back(root->val);
+            if(target == root->val)
+            {
+                v.push_back(root->val);
                 ans.push_back(v);
-                cout<<"yrha"<<endl;
-               v.pop_back();
+                v.pop_back();
                 
-                
-            } 
-            
+            }
             return ;
+            
             
         }
         
         v.push_back(root->val);
+        func(root->left,target-root->val,v,ans);
         
-        func(root->left,target-root->val,ans,v);
-//         v.pop_back();
+        func(root->right,target-root->val,v,ans);
         
-//         v.push_back(root->val);
-        
-        func(root->right,target-root->val,ans,v);
         v.pop_back();
         
-       // return ;
     }
     
-    
-    
-    
-    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+    vector<vector<int>> pathSum(TreeNode* root, int target) {
         
+        
+    
+        vector<int>v;
         vector<vector<int>>ans;
+        
         if(root == NULL) return ans;
         
-        vector<int>v;
-         func(root,targetSum,ans,v);
-        
+        func(root,target,v,ans);
         return ans;
     }
 };
