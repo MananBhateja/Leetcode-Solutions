@@ -5,12 +5,12 @@ public:
         vector<long long>pre(nums.size());
         
         pre[0]=nums[0];
-        unordered_map<int,int>h;
+        // unordered_map<int,int>h;
         
-       h[nums[0]]++;
+       // h[nums[0]]++;
         for(int i=1;i<nums.size();i++)
            { pre[i]=pre[i-1]+nums[i];
-            h[nums[i]]++;
+            // h[nums[i]]++;
         }
        // if(h.size() == 1 )
 //            return 0;
